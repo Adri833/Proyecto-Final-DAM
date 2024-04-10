@@ -43,12 +43,16 @@ public class Menu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("antonio");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewButton = new JButton("Registrarse");
+		btnNewButton.setBounds(69, 130, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Iniciar sesion");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(88, 98, 89, 23);
-		contentPane.add(btnNewButton);
+		btnNewButton_1.setBounds(246, 130, 89, 23);
+		contentPane.add(btnNewButton_1);
 	}
 }
