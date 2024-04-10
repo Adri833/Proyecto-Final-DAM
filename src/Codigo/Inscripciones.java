@@ -6,13 +6,15 @@ public class Inscripciones {
 	private String nombre;
 	private int edad;
 	private String dni;
+	private int telefono;
 	private String pais;
 	
 	//Constructor
-	public Inscripciones(String nombre, int edad, String dni, String pais) {
+	public Inscripciones(String nombre, int edad, int telefono, String dni, String pais) {
 		this.nombre = nombre;
 		this.edad = edad;
 		this.dni = dni;
+		this.telefono = telefono;
 		this.pais = pais;
 	}
 	
@@ -29,9 +31,15 @@ public class Inscripciones {
 		return this.dni;
 	}
 	
+	public int getTelefono() {
+		return this.telefono;
+	}
+	
 	public String getPais() {
 		return this.pais;
 	}
+	
+	
 	
 	//Metodos set
 	public void setNombre(String newNombre) {
@@ -44,6 +52,10 @@ public class Inscripciones {
 	
 	public void setDni(String newDni) {
 		this.dni = newDni;
+	}
+	
+	public void setTelefono(int newTelefono) {
+		this.telefono = newTelefono;
 	}
 	
 	public void setPais(String newPais) {
