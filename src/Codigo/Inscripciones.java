@@ -39,8 +39,6 @@ public class Inscripciones {
 		return this.pais;
 	}
 	
-	frthvftvfru
-	
 	//Metodos set
 	public void setNombre(String newNombre) {
 		this.nombre = newNombre;
