@@ -112,7 +112,7 @@ public class Principal extends JFrame {
         brownButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
         brownButton.setBorderPainted(false);
         brownButton.setContentAreaFilled(false);
-        brownButton.setBounds(76, 250, 471, 144);
+        brownButton.setBounds(73, 264, 471, 144);
 
         // Establecer texto en el centro del botón
         brownButton.setHorizontalTextPosition(JButton.CENTER);
