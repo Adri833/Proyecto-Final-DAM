@@ -99,10 +99,60 @@ public class Principal extends JFrame {
             }
         });
         
+     // Boton marrón
+        JButton brownButton = new JButton("Inscripciones");
+
+        // Cambio de Frame
+        brownButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Inscripciones ventanaInscripciones = new Inscripciones();
+            	ventanaInscripciones.setVisible(true);            }
+        });
+
+        brownButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
+        brownButton.setBorderPainted(false);
+        brownButton.setContentAreaFilled(false);
+        brownButton.setBounds(76, 250, 471, 144);
+
+        // Establecer texto en el centro del botón
+        brownButton.setHorizontalTextPosition(JButton.CENTER);
+        brownButton.setVerticalTextPosition(JButton.CENTER);
+
+        // Cargar la imagen normal
+        ImageIcon brownNormalIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton marron.png"));
+        Image brownNormalImage = brownNormalIcon.getImage().getScaledInstance(brownButton.getWidth(), brownButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon brownNormal = new ImageIcon(brownNormalImage);
+
+        // Cargar la imagen para cuando el ratón pasa sobre el botón
+        ImageIcon brownHoverIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton marron seleccionado.png"));
+        Image brownHoverImage = brownHoverIcon.getImage().getScaledInstance(brownButton.getWidth(), brownButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon brownHover = new ImageIcon(brownHoverImage);
+
+        // Establecer la imagen normal como icono inicial
+        brownButton.setIcon(brownNormal);
+
+        // Agregar el botón al panel de contenido
+        contentPane.add(brownButton);
+
+        // Listener de ratón para cambiar la imagen cuando el ratón entra en el botón
+        brownButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                brownButton.setIcon(brownHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                brownButton.setIcon(brownNormal);
+            }
+        });
+        
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/Wallpaper2.jpg")));
 		lblNewLabel.setBounds(0, 0, 1920, 1080);
 		contentPane.add(lblNewLabel);
+		
+		
 	
 		
 	}
