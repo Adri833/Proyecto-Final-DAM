@@ -147,6 +147,56 @@ public class Principal extends JFrame {
             }
         });
         
+     // Boton rojo
+        JButton redButton = new JButton("Borrar Evento");
+
+        // Cambio de Frame
+        redButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               BorrarEvento ventanaBorrar = new BorrarEvento();
+                ventanaBorrar.setVisible(true);
+            }
+        });
+
+        redButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
+        redButton.setBorderPainted(false);
+        redButton.setContentAreaFilled(false);
+        redButton.setBounds(1381, 95, 471, 144);
+
+        // Establecer texto en el centro del botón
+        redButton.setHorizontalTextPosition(JButton.CENTER);
+        redButton.setVerticalTextPosition(JButton.CENTER);
+
+        // Cargar la imagen normal
+        ImageIcon redNormalIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton rojo.png"));
+        Image redNormalImage = redNormalIcon.getImage().getScaledInstance(redButton.getWidth(), redButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon redNormal = new ImageIcon(redNormalImage);
+
+        // Cargar la imagen para cuando el ratón pasa sobre el botón
+        ImageIcon redHoverIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton rojo seleccionado.png"));
+        Image redHoverImage = redHoverIcon.getImage().getScaledInstance(redButton.getWidth(), redButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon redHover = new ImageIcon(redHoverImage);
+
+        // Establecer la imagen normal como icono inicial
+        redButton.setIcon(redNormal);
+
+        // Agregar el botón al panel de contenido
+        contentPane.add(redButton);
+
+        // Listener de ratón para cambiar la imagen cuando el ratón entra en el botón
+        redButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                redButton.setIcon(redHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                redButton.setIcon(redNormal);
+            }
+        });
+
+        
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/Wallpaper2.jpg")));
 		lblNewLabel.setBounds(0, 0, 1920, 1080);
