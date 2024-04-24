@@ -110,7 +110,35 @@ public class AñadirEvento extends JFrame {
 		labelTipo.setBackground(Color.BLACK);
 		labelTipo.setBounds(56, 409, 102, 43);
 		contentPane.add(labelTipo);
+		
+		//Menú desplegable
+		
+				String[] opciones = {"VGC", "Cartas"}; //Crear las opciones del menú
 				
+				//Crear un JComboBox con las opciones
+				JComboBox<String> comboBox = new JComboBox<>(opciones);
+				comboBox.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 27));
+				comboBox.setForeground(Color.WHITE);
+				comboBox.setBackground(Color.GRAY);
+				comboBox.setBounds(150, 409, 340, 43);
+				
+				// Agregar un ActionListener para manejar los eventos de selección
+		        comboBox.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+		            	/* Obtener el elemento seleccionado del JComboBox
+		                String seleccion = (String) comboBox.getSelectedItem();
+		                 Imprimir el elemento seleccionado
+		                System.out.println("Opción seleccionada: " + seleccion);*/
+		            }
+		        });
+
+		        // Agregar el JComboBox al marco
+				contentPane.add(comboBox);
+
+		        // Establecer el marco como visible
+				contentPane.setLayout(null);
+				contentPane.setVisible(true);
+		
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,9 +150,11 @@ public class AñadirEvento extends JFrame {
 					// Se inicializan los datos recogidos en el textfield
 					String nombre = cuadroNombre.getText();
 					String localizacion = cuadroLocalizacion.getText();
+					String fecha = cuadroFecha.getText();
+					String tipo = (String) comboBox.getSelectedItem();
 					
 					String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
-							+ "VALUES ('Campeonato Regional', 'Sevilla', '2024-05-12', 'VGC');";
+							+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fecha + "', '" + tipo + "');";
 					conexion.ejecutarInsertDeleteUpdate(insertar);
 				} catch (SQLException e1) {
 					e1.printStackTrace();					
@@ -150,33 +180,6 @@ public class AñadirEvento extends JFrame {
 		botonGuardar.setBounds(168, 518, 297, 100);
 		contentPane.add(botonGuardar);
 		
-		//Menú desplegable
-		
-		String[] opciones = {"VGC", "Cartas"}; //Crear las opciones del menú
-		
-		//Crear un JComboBox con las opciones
-		JComboBox<String> comboBox = new JComboBox<>(opciones);
-		comboBox.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 27));
-		comboBox.setForeground(Color.WHITE);
-		comboBox.setBackground(Color.GRAY);
-		comboBox.setBounds(150, 409, 340, 43);
-		
-		// Agregar un ActionListener para manejar los eventos de selección
-        comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	/* Obtener el elemento seleccionado del JComboBox
-                String seleccion = (String) comboBox.getSelectedItem();
-                 Imprimir el elemento seleccionado
-                System.out.println("Opción seleccionada: " + seleccion);*/
-            }
-        });
-
-        // Agregar el JComboBox al marco
-		contentPane.add(comboBox);
-
-        // Establecer el marco como visible
-		contentPane.setLayout(null);
-		contentPane.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(AñadirEvento.class.getResource("/Imagenes/Wallpaper3.jpg")));
