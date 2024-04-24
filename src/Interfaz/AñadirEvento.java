@@ -134,11 +134,12 @@ public class AñadirEvento extends JFrame {
         // Establecer el marco como visible
 		contentPane.setLayout(null);
 		contentPane.setVisible(true);
-    }
 		
-		
-		/*JLabel lblNewLabel = new JLabel("");
+		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(AñadirEvento.class.getResource("/Imagenes/Wallpaper3.jpg")));
 		lblNewLabel.setBounds(0, 0, 1280, 720);
-		contentPane.add(lblNewLabel);*/
+		contentPane.add(lblNewLabel);
+    }
+		
+
 	}
