@@ -195,6 +195,56 @@ public class Principal extends JFrame {
                 redButton.setIcon(redNormal);
             }
         });
+        
+     // Boton azul
+        JButton blueButton = new JButton("Consultar Eventos");
+
+        // Cambio de Frame
+        blueButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Consultorio ventanaconsultorio = new Consultorio();
+            	ventanaconsultorio.setVisible(true);
+            }
+        });
+
+        blueButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
+        blueButton.setBorderPainted(false);
+        blueButton.setContentAreaFilled(false);
+        blueButton.setBounds(1381, 264, 471, 144);
+
+        // Establecer texto en el centro del botón
+        blueButton.setHorizontalTextPosition(JButton.CENTER);
+        blueButton.setVerticalTextPosition(JButton.CENTER);
+
+        // Cargar la imagen normal
+        ImageIcon blueNormalIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton azul.png"));
+        Image blueNormalImage = blueNormalIcon.getImage().getScaledInstance(blueButton.getWidth(), blueButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon blueNormal = new ImageIcon(blueNormalImage);
+
+        // Cargar la imagen para cuando el ratón pasa sobre el botón
+        ImageIcon blueHoverIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton azul seleccionado.png"));
+        Image blueHoverImage = blueHoverIcon.getImage().getScaledInstance(blueButton.getWidth(), blueButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon blueHover = new ImageIcon(blueHoverImage);
+
+        // Establecer la imagen normal como icono inicial
+        blueButton.setIcon(blueNormal);
+
+        // Agregar el botón al panel de contenido
+        contentPane.add(blueButton);
+
+        // Listener de ratón para cambiar la imagen cuando el ratón entra en el botón
+        blueButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                blueButton.setIcon(blueHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                blueButton.setIcon(blueNormal);
+            }
+        });
+
 
         
 		JLabel lblNewLabel = new JLabel("");
