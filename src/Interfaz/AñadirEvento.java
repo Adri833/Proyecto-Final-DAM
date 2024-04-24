@@ -5,12 +5,17 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BBDD.ConexionMySQL;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -20,11 +25,11 @@ public class AñadirEvento extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JLabel lblNewLabel;
-	private JTextField textField_2;
-	private JLabel lblNewLabel_2;
+	private JTextField cuadroNombre;
+	private JTextField cuadroLocalizacion;
+	private JLabel labelFecha;
+	private JTextField cuadroFecha;
+	private JLabel labelTipo;
 
 	/**
 	 * Launch the application.
@@ -54,58 +59,89 @@ public class AñadirEvento extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nombre:");
-		lblNewLabel_1.setBackground(Color.BLACK);
-		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 30));
-		lblNewLabel_1.setForeground(Color.BLACK);
-		lblNewLabel_1.setBounds(56, 112, 136, 43);
-		contentPane.add(lblNewLabel_1);
+		JLabel labelNombre = new JLabel("Nombre:");
+		labelNombre.setBackground(Color.BLACK);
+		labelNombre.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelNombre.setForeground(Color.BLACK);
+		labelNombre.setBounds(56, 112, 136, 43);
+		contentPane.add(labelNombre);
 		
-		textField = new JTextField();
-		textField.setBackground(Color.GRAY);
-		textField.setForeground(Color.LIGHT_GRAY);
-		textField.setBounds(191, 112, 340, 43);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		cuadroNombre = new JTextField();
+		cuadroNombre.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroNombre.setBackground(Color.GRAY);
+		cuadroNombre.setForeground(Color.WHITE);
+		cuadroNombre.setBounds(191, 112, 340, 43);
+		contentPane.add(cuadroNombre);
+		cuadroNombre.setColumns(10);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Localización:");
-		lblNewLabel_1_1.setForeground(Color.BLACK);
-		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 30));
-		lblNewLabel_1_1.setBackground(Color.BLACK);
-		lblNewLabel_1_1.setBounds(56, 213, 195, 43);
-		contentPane.add(lblNewLabel_1_1);
+		JLabel labelLocalizacion = new JLabel("Localización:");
+		labelLocalizacion.setForeground(Color.BLACK);
+		labelLocalizacion.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelLocalizacion.setBackground(Color.BLACK);
+		labelLocalizacion.setBounds(56, 213, 195, 43);
+		contentPane.add(labelLocalizacion);
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(Color.LIGHT_GRAY);
-		textField_1.setColumns(10);
-		textField_1.setBackground(Color.GRAY);
-		textField_1.setBounds(257, 213, 340, 43);
-		contentPane.add(textField_1);
+		cuadroLocalizacion = new JTextField();
+		cuadroLocalizacion.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroLocalizacion.setForeground(Color.WHITE);
+		cuadroLocalizacion.setColumns(10);
+		cuadroLocalizacion.setBackground(Color.GRAY);
+		cuadroLocalizacion.setBounds(257, 213, 307, 43);
+		contentPane.add(cuadroLocalizacion);
 		
-		lblNewLabel = new JLabel("Fecha:");
-		lblNewLabel.setForeground(Color.BLACK);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 30));
-		lblNewLabel.setBackground(Color.BLACK);
-		lblNewLabel.setBounds(56, 307, 102, 43);
-		contentPane.add(lblNewLabel);
+		labelFecha = new JLabel("Fecha:");
+		labelFecha.setForeground(Color.BLACK);
+		labelFecha.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelFecha.setBackground(Color.BLACK);
+		labelFecha.setBounds(56, 307, 102, 43);
+		contentPane.add(labelFecha);
 		
-		textField_2 = new JTextField();
-		textField_2.setForeground(Color.LIGHT_GRAY);
-		textField_2.setColumns(10);
-		textField_2.setBackground(Color.GRAY);
-		textField_2.setBounds(168, 307, 340, 43);
-		contentPane.add(textField_2);
+		cuadroFecha = new JTextField();
+		cuadroFecha.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroFecha.setForeground(Color.WHITE);
+		cuadroFecha.setColumns(10);
+		cuadroFecha.setBackground(Color.GRAY);
+		cuadroFecha.setBounds(168, 307, 340, 43);
+		contentPane.add(cuadroFecha);
 		
-		lblNewLabel_2 = new JLabel("Tipo:");
-		lblNewLabel_2.setForeground(Color.BLACK);
-		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 30));
-		lblNewLabel_2.setBackground(Color.BLACK);
-		lblNewLabel_2.setBounds(56, 409, 102, 43);
-		contentPane.add(lblNewLabel_2);
+		labelTipo = new JLabel("Tipo:");
+		labelTipo.setForeground(Color.BLACK);
+		labelTipo.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelTipo.setBackground(Color.BLACK);
+		labelTipo.setBounds(56, 409, 102, 43);
+		contentPane.add(labelTipo);
 		
-		JButton btnNewButton = new JButton("Guardar");
-		btnNewButton.setBounds(168, 518, 297, 100);
-		contentPane.add(btnNewButton);
+		JButton botonGuardar = new JButton("Guardar");
+		botonGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConexionMySQL conexion = new ConexionMySQL("freedb_Jesula11", "SzXj3Zb&zV4JmdM", "ProyectoFinal");
+				try {
+					conexion.conectar();
+					String insertar = "";
+					conexion.ejecutarInsertDeleteUpdate(insertar);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					
+				}
+				finally {
+					try {
+						conexion.desconectar();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				dispose(); // Cerrar la ventana al pulsar el botón
+				
+				// Mostrar un mensaje 
+				String mensaje = "Evento creado";
+				JOptionPane.showMessageDialog(null, mensaje);
+			}
+		});
+		botonGuardar.setBackground(new Color(255, 255, 81));
+		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
+		botonGuardar.setBounds(168, 518, 297, 100);
+		contentPane.add(botonGuardar);
 		
 		//Menú desplegable
 		
@@ -113,7 +149,7 @@ public class AñadirEvento extends JFrame {
 		
 		//Crear un JComboBox con las opciones
 		JComboBox<String> comboBox = new JComboBox<>(opciones);
-		comboBox.setFont(new Font("High Tower Text", Font.PLAIN, 27));
+		comboBox.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 27));
 		comboBox.setForeground(Color.WHITE);
 		comboBox.setBackground(Color.GRAY);
 		comboBox.setBounds(150, 409, 340, 43);
@@ -121,9 +157,9 @@ public class AñadirEvento extends JFrame {
 		// Agregar un ActionListener para manejar los eventos de selección
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Obtener el elemento seleccionado del JComboBox
+            	/* Obtener el elemento seleccionado del JComboBox
                 String seleccion = (String) comboBox.getSelectedItem();
-                /* Imprimir el elemento seleccionado
+                 Imprimir el elemento seleccionado
                 System.out.println("Opción seleccionada: " + seleccion);*/
             }
         });
