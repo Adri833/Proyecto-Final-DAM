@@ -110,22 +110,29 @@ public class AñadirEvento extends JFrame {
 		labelTipo.setBackground(Color.BLACK);
 		labelTipo.setBounds(56, 409, 102, 43);
 		contentPane.add(labelTipo);
-		
+				
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConexionMySQL conexion = new ConexionMySQL("freedb_Jesula11", "SzXj3Zb&zV4JmdM", "ProyectoFinal");
+				ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 				try {
 					conexion.conectar();
-					String insertar = "";
+					System.out.println("on"); // Comprobaciones que la base de datos funciona
+					
+					// Se inicializan los datos recogidos en el textfield
+					String nombre = cuadroNombre.getText();
+					String localizacion = cuadroLocalizacion.getText();
+					
+					String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
+							+ "VALUES ('Campeonato Regional', 'Sevilla', '2024-05-12', 'VGC');";
 					conexion.ejecutarInsertDeleteUpdate(insertar);
 				} catch (SQLException e1) {
-					e1.printStackTrace();
-					
+					e1.printStackTrace();					
 				}
 				finally {
 					try {
 						conexion.desconectar();
+						System.out.println("off");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
