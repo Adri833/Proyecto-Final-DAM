@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,10 +23,11 @@ public class Inscripciones extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField cuadroNombre;
-	private JTextField cuadroLocalizacion;
-	private JLabel labelFecha;
-	private JTextField cuadroFecha;
-	private JLabel labelTipo;
+	private JTextField cuadroDni;
+	private JLabel labelEdad;
+	private JTextField cuadroPokemon;
+	private JTextField cuadroEdad;
+	private JLabel labelPokemon;
 
 
 	/**
@@ -73,78 +73,101 @@ public class Inscripciones extends JFrame {
 		contentPane.add(cuadroNombre);
 		cuadroNombre.setColumns(10);
 		
-		JLabel labelLocalizacion = new JLabel("DNI:");
-		labelLocalizacion.setForeground(Color.BLACK);
-		labelLocalizacion.setFont(new Font("Dialog", Font.BOLD, 30));
-		labelLocalizacion.setBackground(Color.BLACK);
-		labelLocalizacion.setBounds(56, 210, 76, 43);
-		contentPane.add(labelLocalizacion);
+		JLabel labelDni = new JLabel("DNI:");
+		labelDni.setForeground(Color.BLACK);
+		labelDni.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelDni.setBackground(Color.BLACK);
+		labelDni.setBounds(56, 210, 76, 43);
+		contentPane.add(labelDni);
 		
-		cuadroLocalizacion = new JTextField();
-		cuadroLocalizacion.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
-		cuadroLocalizacion.setForeground(Color.WHITE);
-		cuadroLocalizacion.setColumns(10);
-		cuadroLocalizacion.setBackground(Color.GRAY);
-		cuadroLocalizacion.setBounds(158, 210, 340, 43);
-		contentPane.add(cuadroLocalizacion);
+		cuadroDni = new JTextField();
+		cuadroDni.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroDni.setForeground(Color.WHITE);
+		cuadroDni.setColumns(10);
+		cuadroDni.setBackground(Color.GRAY);
+		cuadroDni.setBounds(138, 210, 340, 43);
+		contentPane.add(cuadroDni);
 		
-		labelFecha = new JLabel("Edad:");
-		labelFecha.setForeground(Color.BLACK);
-		labelFecha.setFont(new Font("Dialog", Font.BOLD, 30));
-		labelFecha.setBackground(Color.BLACK);
-		labelFecha.setBounds(56, 310, 102, 43);
-		contentPane.add(labelFecha);
+		labelEdad = new JLabel("Edad:");
+		labelEdad.setForeground(Color.BLACK);
+		labelEdad.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelEdad.setBackground(Color.BLACK);
+		labelEdad.setBounds(56, 310, 102, 43);
+		contentPane.add(labelEdad);
 		
-		cuadroFecha = new JTextField();
-		cuadroFecha.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
-		cuadroFecha.setForeground(Color.WHITE);
-		cuadroFecha.setColumns(10);
-		cuadroFecha.setBackground(Color.GRAY);
-		cuadroFecha.setBounds(158, 310, 340, 43);
-		contentPane.add(cuadroFecha);
+		cuadroEdad = new JTextField();
+		cuadroEdad.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroEdad.setForeground(Color.WHITE);
+		cuadroEdad.setColumns(10);
+		cuadroEdad.setBackground(Color.GRAY);
+		cuadroEdad.setBounds(158, 310, 340, 43);
+		contentPane.add(cuadroEdad);
 		
-		labelTipo = new JLabel("Pokemon:");
-		labelTipo.setForeground(Color.BLACK);
-		labelTipo.setFont(new Font("Dialog", Font.BOLD, 30));
-		labelTipo.setBackground(Color.BLACK);
-		labelTipo.setBounds(56, 410, 156, 43);
-		contentPane.add(labelTipo);
+		labelPokemon = new JLabel("Pokemon:");
+		labelPokemon.setForeground(Color.BLACK);
+		labelPokemon.setFont(new Font("Dialog", Font.BOLD, 30));
+		labelPokemon.setBackground(Color.BLACK);
+		labelPokemon.setBounds(56, 410, 156, 43);
+		contentPane.add(labelPokemon);
 		
-		cuadroFecha = new JTextField();
-		cuadroFecha.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
-		cuadroFecha.setForeground(Color.WHITE);
-		cuadroFecha.setColumns(10);
-		cuadroFecha.setBackground(Color.GRAY);
-		cuadroFecha.setBounds(209, 410, 340, 43);
-		contentPane.add(cuadroFecha);
+		cuadroPokemon = new JTextField();
+		cuadroPokemon.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+		cuadroPokemon.setForeground(Color.WHITE);
+		cuadroPokemon.setColumns(10);
+		cuadroPokemon.setBackground(Color.GRAY);
+		cuadroPokemon.setBounds(209, 410, 340, 43);
+		contentPane.add(cuadroPokemon);
 		
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.setForeground(Color.ORANGE);
 		botonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConexionMySQL conexion = new ConexionMySQL("root", "test", "");
-				try {
-					conexion.conectar();
-					String insertar = "";
-					conexion.ejecutarInsertDeleteUpdate(insertar);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					
-				}
-				finally {
+				
+				// Se inicializan los datos recogidos en el textfield
+				String nombre = cuadroNombre.getText();
+				String dni= cuadroDni.getText();
+				String edadString = cuadroEdad.getText();
+				String pokemon = cuadroPokemon.getText();
+
+				// Convertir edad de String a Int
+				int edad = Integer.parseInt(edadString);
+				
+				// Comprobar que el participante sea mayor de edad y el dni sea correcto
+				if (edad < 18) {
+					String mensaje18 = "El participante debe ser mayor de edad";
+					JOptionPane.showMessageDialog(null, mensaje18, "" ,JOptionPane.WARNING_MESSAGE);
+				} else {
+					ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 					try {
-						conexion.desconectar();
+						conexion.conectar();
+						System.out.println("on"); // Comprobaciones que la base de datos funciona
+						
+						// Declaracion SQL
+						String insertar = "INSERT INTO Participantes (nombre, dni, edad, pokemon) "
+								+ "VALUES ('" + nombre + "', '" + dni + "', '" + edad + "', '" + pokemon + "');";
+						conexion.ejecutarInsertDeleteUpdate(insertar);
 					} catch (SQLException e1) {
-						e1.printStackTrace();
+						e1.printStackTrace();					
 					}
-				}
-				
-				dispose(); // Cerrar la ventana al pulsar el botón
-				
-				// Mostrar un mensaje 
-				String mensaje = "Usuario registrado";
-				JOptionPane.showMessageDialog(null, mensaje);
+					// Cerramos la conexion
+					finally {
+						try {
+							conexion.desconectar();
+							System.out.println("off");
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+					
+					dispose(); // Cerrar la ventana al pulsar el botón
+					
+					// Mostrar un mensaje 
+					String mensajeEvento = "Participante agregado";
+					JOptionPane.showMessageDialog(null, mensajeEvento);
+			    }
 			}
+				
+				
 		});
 		botonGuardar.setBackground(new Color(0, 0, 0));
 		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
@@ -156,6 +179,7 @@ public class Inscripciones extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setVisible(true);
 		
+		// Fondo de pantalla
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(AñadirEvento.class.getResource("/Imagenes/Wallpaper6.jpg")));
 		lblNewLabel.setBounds(0, 0, 1280, 720);

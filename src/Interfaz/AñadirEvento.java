@@ -153,12 +153,14 @@ public class AñadirEvento extends JFrame {
 					String fecha = cuadroFecha.getText();
 					String tipo = (String) comboBox.getSelectedItem();
 					
+					// Declaracion SQL
 					String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
 							+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fecha + "', '" + tipo + "');";
 					conexion.ejecutarInsertDeleteUpdate(insertar);
 				} catch (SQLException e1) {
 					e1.printStackTrace();					
 				}
+				// Cerramos la conexion
 				finally {
 					try {
 						conexion.desconectar();
@@ -173,7 +175,7 @@ public class AñadirEvento extends JFrame {
 				// Mostrar un mensaje 
 				String mensaje = "Evento creado";
 				JOptionPane.showMessageDialog(null, mensaje);
-			}
+		    }
 		});
 		botonGuardar.setBackground(new Color(255, 255, 81));
 		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
