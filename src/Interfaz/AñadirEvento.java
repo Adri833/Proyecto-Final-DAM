@@ -2,6 +2,8 @@ package Interfaz;
 
 import java.awt.EventQueue;
 
+import com.toedter.calendar.*;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,10 +18,13 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+
 
 public class AñadirEvento extends JFrame {
 
@@ -28,7 +33,6 @@ public class AñadirEvento extends JFrame {
 	private JTextField cuadroNombre;
 	private JTextField cuadroLocalizacion;
 	private JLabel labelFecha;
-	private JTextField cuadroFecha;
 	private JLabel labelTipo;
 
 	/**
@@ -96,13 +100,12 @@ public class AñadirEvento extends JFrame {
 		labelFecha.setBounds(56, 307, 102, 43);
 		contentPane.add(labelFecha);
 		
-		cuadroFecha = new JTextField();
-		cuadroFecha.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
-		cuadroFecha.setForeground(Color.WHITE);
-		cuadroFecha.setColumns(10);
-		cuadroFecha.setBackground(Color.GRAY);
-		cuadroFecha.setBounds(168, 307, 340, 43);
-		contentPane.add(cuadroFecha);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setForeground(Color.GRAY);
+		dateChooser.setBackground(Color.GRAY);
+		dateChooser.setBounds(172, 307, 385, 43);
+		contentPane.add(dateChooser);
 		
 		labelTipo = new JLabel("Tipo:");
 		labelTipo.setForeground(Color.BLACK);
@@ -110,7 +113,7 @@ public class AñadirEvento extends JFrame {
 		labelTipo.setBackground(Color.BLACK);
 		labelTipo.setBounds(56, 409, 102, 43);
 		contentPane.add(labelTipo);
-		
+
 		//Menú desplegable
 		
 				String[] opciones = {"VGC", "Cartas"}; //Crear las opciones del menú
@@ -150,12 +153,17 @@ public class AñadirEvento extends JFrame {
 					// Se inicializan los datos recogidos en el textfield
 					String nombre = cuadroNombre.getText();
 					String localizacion = cuadroLocalizacion.getText();
-					String fecha = cuadroFecha.getText();
+					Date fecha = dateChooser.getDate();
 					String tipo = (String) comboBox.getSelectedItem();
+					
+					// Convertir fecha a String
+					SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					String fechaString = formatDate.format(fecha);
+					
 					
 					// Declaracion SQL
 					String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
-							+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fecha + "', '" + tipo + "');";
+							+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fechaString + "', '" + tipo + "');";
 					conexion.ejecutarInsertDeleteUpdate(insertar);
 				} catch (SQLException e1) {
 					e1.printStackTrace();					
@@ -182,12 +190,13 @@ public class AñadirEvento extends JFrame {
 		botonGuardar.setBounds(168, 518, 297, 100);
 		contentPane.add(botonGuardar);
 		
+		// Fondo de pantalla
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(AñadirEvento.class.getResource("/Imagenes/Wallpaper3.jpg")));
 		lblNewLabel.setBounds(0, 0, 1280, 720);
 		contentPane.add(lblNewLabel);
-    }
-		
 
+
+    }
 	}

@@ -2,6 +2,7 @@ package BBDD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -96,6 +97,10 @@ public class ConexionMySQL {
         ResultSet rset = stmt.executeQuery(consulta);
 
         return rset;
+    }
+    
+    public PreparedStatement prepareStatement(String consulta) throws SQLException {
+        return connection.prepareStatement(consulta);
     }
 
     /**

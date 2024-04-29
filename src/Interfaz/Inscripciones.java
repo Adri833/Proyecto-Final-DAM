@@ -120,6 +120,11 @@ public class Inscripciones extends JFrame {
 		
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.setForeground(Color.ORANGE);
+		botonGuardar.setBackground(new Color(0, 0, 0));
+		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
+		botonGuardar.setBounds(168, 518, 297, 100);
+		contentPane.add(botonGuardar);
+
 		botonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -164,16 +169,12 @@ public class Inscripciones extends JFrame {
 					// Mostrar un mensaje 
 					String mensajeEvento = "Participante agregado";
 					JOptionPane.showMessageDialog(null, mensajeEvento);
+					
+					SeleccionarEvento ventanaSeleccionarEvento = new SeleccionarEvento();
+					ventanaSeleccionarEvento.setVisible(true);
 			    }
 			}
-				
-				
 		});
-		botonGuardar.setBackground(new Color(0, 0, 0));
-		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
-		botonGuardar.setBounds(168, 518, 297, 100);
-		contentPane.add(botonGuardar);
-
 
         // Establecer el marco como visible
 		contentPane.setLayout(null);
