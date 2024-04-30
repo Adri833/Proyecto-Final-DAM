@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SeleccionarEvento extends JFrame {
+public class SeleccionarEvento2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -25,7 +25,7 @@ public class SeleccionarEvento extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SeleccionarEvento frame = new SeleccionarEvento();
+					SeleccionarEvento2 frame = new SeleccionarEvento2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class SeleccionarEvento extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public SeleccionarEvento() {
+	public SeleccionarEvento2() {
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			setBounds(0, 0, 1280, 720);
 			setLocationRelativeTo(null);
@@ -53,14 +53,21 @@ public class SeleccionarEvento extends JFrame {
 			lblNewLabel_1.setBounds(40, 60, 691, 80);
 			contentPane.add(lblNewLabel_1);
 			
+			JComboBox<String> participantesComboBox = new JComboBox<>();
+			participantesComboBox.setBackground(new Color(177, 146, 164));
+			participantesComboBox.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 27));
+			participantesComboBox.setBounds(160, 250, 390 ,56);
+			contentPane.add(participantesComboBox);
+			
 			JComboBox<String> eventosComboBox = new JComboBox<>();
 			eventosComboBox.setBackground(new Color(177, 146, 164));
 			eventosComboBox.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 27));
-			eventosComboBox.setBounds(160, 219, 390 ,56);
+			eventosComboBox.setBounds(160, 350, 390 ,56);
 			contentPane.add(eventosComboBox);
 			 
 			// Carga los eventos de la base de datos
 			EventosBBDD(eventosComboBox);
+			ParticipantesBBDD(participantesComboBox);
 	
 			// Establecer el marco como visible
 				contentPane.setLayout(null);
@@ -70,7 +77,7 @@ public class SeleccionarEvento extends JFrame {
 			botonInscribir.setForeground(new Color(225, 215, 221));
 			botonInscribir.setBackground(new Color(177, 146, 164));
 			botonInscribir.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));
-			botonInscribir.setBounds(209, 415, 297, 100);
+			botonInscribir.setBounds(209, 500, 297, 100);
 			contentPane.add(botonInscribir);
 			
 			botonInscribir.addActionListener(new ActionListener() {
@@ -79,11 +86,14 @@ public class SeleccionarEvento extends JFrame {
 				    // Obtener el evento seleccionado del comboBox
 			        String eventoSeleccionado = (String) eventosComboBox.getSelectedItem();
 			        
+			        // Obtener el participante seleccionado del comboBox
+			        String participanteSeleccionado = (String) participantesComboBox.getSelectedItem();
+			        
 			        // Obtener el ID del evento seleccionado
 			        int idEvento = obtenerIdEvento(eventoSeleccionado);
 			        
-			        // Obtener el ID del último participante agregado
-			        int idParticipante = obtenerIdParticipante();
+			        // Obtener el ID del participante seleccionado
+			        int idParticipante = obtenerIdParticipante(participanteSeleccionado);
 			        
 			        // Insertar la nueva fila en la tabla Participante_Eventos
 			        insertarParticipanteEvento(idEvento, idParticipante);
@@ -126,6 +136,32 @@ public class SeleccionarEvento extends JFrame {
 		}
 	}
 	
+	private void ParticipantesBBDD(JComboBox<String> participantesComboBox) {
+		ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
+		
+		try {
+			conexion.conectar();
+			
+			// Sentencia SQL para obtener los eventos y ejecutarlos
+			String consulta = "SELECT Nombre FROM Participantes";
+			ResultSet resultSet = conexion.ejecutarSelect(consulta);
+			
+			// Recorre el resultado y lo va agregando al ComboBox
+			while (resultSet.next()) {
+				String nombreParticipante = resultSet.getString("Nombre");
+				participantesComboBox.addItem(nombreParticipante);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				conexion.desconectar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	// Método para obtener el ID del evento seleccionado
 	private int obtenerIdEvento(String nombreEvento) {
 	    int idEvento = -1;
@@ -151,14 +187,16 @@ public class SeleccionarEvento extends JFrame {
 	    return idEvento;
 	}
 	
-	// Método para obtener el ID del último participante agregado
-	private int obtenerIdParticipante() {
+	// Método para obtener el ID del participante seleccionado
+	private int obtenerIdParticipante(String nombreParticipante) {
 	    int idParticipante = -1;
 	    ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 	    try {
 	        conexion.conectar();
-	        String consulta = "SELECT MAX(idParticipantes) AS idParticipantes FROM Participantes";
-	        ResultSet resultSet = conexion.ejecutarSelect(consulta);
+	        String consulta = "SELECT idParticipantes FROM Participantes WHERE Nombre = ?";
+	        PreparedStatement statement = conexion.prepareStatement(consulta);
+	        statement.setString(1, nombreParticipante);
+	        ResultSet resultSet = statement.executeQuery();
 	        if (resultSet.next()) {
 	            idParticipante = resultSet.getInt("idParticipantes");
 	        }
@@ -179,12 +217,28 @@ public class SeleccionarEvento extends JFrame {
 	    ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 	    try {
 	        conexion.conectar();
-	        String consulta = "INSERT INTO Participantes_Eventos (id_eventos, id_participantes) VALUES (?, ?)";
-	        PreparedStatement statement = conexion.prepareStatement(consulta);
-	        statement.setInt(1, idEvento);
-	        statement.setInt(2, idParticipantes);
-	        statement.executeUpdate();
-	        JOptionPane.showMessageDialog(null, "Participante inscrito correctamente al evento.");
+	        
+	        // Verificar si el participante ya está inscrito en el evento
+	        String verificacion = "SELECT COUNT(*) FROM Participantes_Eventos WHERE id_eventos = ? AND id_participantes = ?";
+	        PreparedStatement Verificacion = conexion.prepareStatement(verificacion);
+	        Verificacion.setInt(1, idEvento);
+	        Verificacion.setInt(2, idParticipantes);
+	        ResultSet rsVerificacion = Verificacion.executeQuery();
+	        rsVerificacion.next();
+	        int cantidad = rsVerificacion.getInt(1);
+	        
+	        // Si la cantidad es mayor que 0, significa que el participante ya está inscrito
+	        if (cantidad > 0) {
+	            JOptionPane.showMessageDialog(null, "El participante ya está inscrito en este evento.");
+	        } else {
+	            // Si no, inserta el nuevo registro en la tabla Participantes_Eventos
+	            String consulta = "INSERT INTO Participantes_Eventos (id_eventos, id_participantes) VALUES (?, ?)";
+	            PreparedStatement statement = conexion.prepareStatement(consulta);
+	            statement.setInt(1, idEvento);
+	            statement.setInt(2, idParticipantes);
+	            statement.executeUpdate();
+	            JOptionPane.showMessageDialog(null, "Participante inscrito correctamente al evento.");
+	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Error al inscribir al participante al evento.");
@@ -196,4 +250,6 @@ public class SeleccionarEvento extends JFrame {
 	        }
 	    }
 	}
+
+	
 }

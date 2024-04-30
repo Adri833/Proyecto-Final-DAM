@@ -53,7 +53,7 @@ public class Principal extends JFrame {
         addEventButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
         addEventButton.setBorderPainted(false);;
         addEventButton.setContentAreaFilled(false);
-        addEventButton.setBounds(73, 95, 471, 144);
+        addEventButton.setBounds(50, 95, 471, 144);
 
         // Establecer texto en el centro del botón
         addEventButton.setHorizontalTextPosition(JButton.CENTER);
@@ -101,7 +101,7 @@ public class Principal extends JFrame {
         brownButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
         brownButton.setBorderPainted(false);
         brownButton.setContentAreaFilled(false);
-        brownButton.setBounds(73, 264, 471, 144);
+        brownButton.setBounds(50, 265, 471, 144);
 
         // Establecer texto en el centro del botón
         brownButton.setHorizontalTextPosition(JButton.CENTER);
@@ -150,7 +150,7 @@ public class Principal extends JFrame {
         redButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
         redButton.setBorderPainted(false);
         redButton.setContentAreaFilled(false);
-        redButton.setBounds(1381, 95, 471, 144);
+        redButton.setBounds(1397, 95, 471, 144);
 
         // Establecer texto en el centro del botón
         redButton.setHorizontalTextPosition(JButton.CENTER);
@@ -199,7 +199,7 @@ public class Principal extends JFrame {
         blueButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
         blueButton.setBorderPainted(false);
         blueButton.setContentAreaFilled(false);
-        blueButton.setBounds(1381, 264, 471, 144);
+        blueButton.setBounds(1397, 265, 471, 144);
 
         // Establecer texto en el centro del botón
         blueButton.setHorizontalTextPosition(JButton.CENTER);
@@ -231,6 +231,104 @@ public class Principal extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 blueButton.setIcon(blueNormal);
+            }
+        });
+
+     // Boton rosa
+        JButton pinkButton = new JButton("Agregar a Evento");
+
+        // Cambio de Frame
+        pinkButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SeleccionarEvento2 ventanaSeleccionarEvento2 = new SeleccionarEvento2();
+                ventanaSeleccionarEvento2.setVisible(true);
+            }
+        });
+
+        pinkButton.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
+        pinkButton.setBorderPainted(false);
+        pinkButton.setContentAreaFilled(false);
+        pinkButton.setBounds(1397, 435 , 471, 144);
+
+        // Establecer texto en el centro del botón
+        pinkButton.setHorizontalTextPosition(JButton.CENTER);
+        pinkButton.setVerticalTextPosition(JButton.CENTER);
+
+        // Cargar la imagen normal
+        ImageIcon pinkNormalIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton rosa.png"));
+        Image pinkNormalImage = pinkNormalIcon.getImage().getScaledInstance(pinkButton.getWidth(), pinkButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon pinkNormal = new ImageIcon(pinkNormalImage);
+
+        // Cargar la imagen para cuando el ratón pasa sobre el botón
+        ImageIcon pinkHoverIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton rosa seleccionado.png"));
+        Image pinkHoverImage = pinkHoverIcon.getImage().getScaledInstance(pinkButton.getWidth(), pinkButton.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon pinkHover = new ImageIcon(pinkHoverImage);
+
+        // Establecer la imagen normal como icono inicial
+        pinkButton.setIcon(pinkNormal);
+
+        // Agregar el botón al panel de contenido
+        contentPane.add(pinkButton);
+
+        // Listener de ratón para cambiar la imagen cuando el ratón entra en el botón
+        pinkButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pinkButton.setIcon(pinkHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                pinkButton.setIcon(pinkNormal);
+            }
+        });
+        
+     // Boton gris
+        JButton botonGris = new JButton("Borrar Participante");
+
+        // Cambio de Frame
+        botonGris.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Inscripciones ventanaInscripciones = new Inscripciones();
+                ventanaInscripciones.setVisible(true);
+            }
+        });
+
+        botonGris.setFont(new Font("Rockwell Condensed", Font.BOLD, 40));
+        botonGris.setBorderPainted(false);
+        botonGris.setContentAreaFilled(false);
+        botonGris.setBounds(50, 435, 471, 144);
+
+        // Establecer texto en el centro del botón
+        botonGris.setHorizontalTextPosition(JButton.CENTER);
+        botonGris.setVerticalTextPosition(JButton.CENTER);
+
+        // Cargar la imagen normal
+        ImageIcon grayNormalIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton gris.png"));
+        Image grayNormalImage = grayNormalIcon.getImage().getScaledInstance(botonGris.getWidth(), botonGris.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon grayNormal = new ImageIcon(grayNormalImage);
+
+        // Cargar la imagen para cuando el ratón pasa sobre el botón
+        ImageIcon grayHoverIcon = new ImageIcon(Principal.class.getResource("/Imagenes/Boton gris seleccionado.png"));
+        Image grayHoverImage = grayHoverIcon.getImage().getScaledInstance(botonGris.getWidth(), botonGris.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon grayHover = new ImageIcon(grayHoverImage);
+
+        // Establecer la imagen normal como icono inicial
+        botonGris.setIcon(grayNormal);
+
+        // Agregar el botón al panel de contenido
+        contentPane.add(botonGris);
+
+        // Listener de ratón para cambiar la imagen cuando el ratón entra en el botón
+        botonGris.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                botonGris.setIcon(grayHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                botonGris.setIcon(grayNormal);
             }
         });
 
