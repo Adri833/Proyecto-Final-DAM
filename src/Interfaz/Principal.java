@@ -289,8 +289,8 @@ public class Principal extends JFrame {
         // Cambio de Frame
         botonGris.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Inscripciones ventanaInscripciones = new Inscripciones();
-                ventanaInscripciones.setVisible(true);
+                BorrarParticipantes ventanaBorrarParticipantes = new BorrarParticipantes();
+                ventanaBorrarParticipantes.setVisible(true);
             }
         });
 
