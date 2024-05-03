@@ -125,16 +125,6 @@ public class AñadirEvento extends JFrame {
 				comboBox.setBackground(Color.GRAY);
 				comboBox.setBounds(150, 409, 340, 43);
 				
-				// Agregar un ActionListener para manejar los eventos de selección
-		        comboBox.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent e) {
-		            	/* Obtener el elemento seleccionado del JComboBox
-		                String seleccion = (String) comboBox.getSelectedItem();
-		                 Imprimir el elemento seleccionado
-		                System.out.println("Opción seleccionada: " + seleccion);*/
-		            }
-		        });
-
 		        // Agregar el JComboBox al marco
 				contentPane.add(comboBox);
 
@@ -145,45 +135,50 @@ public class AñadirEvento extends JFrame {
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
-				try {
-					conexion.conectar();
-					System.out.println("on"); // Comprobaciones que la base de datos funciona
-					
-					// Se inicializan los datos recogidos en el textfield
-					String nombre = cuadroNombre.getText();
-					String localizacion = cuadroLocalizacion.getText();
-					Date fecha = dateChooser.getDate();
-					String tipo = (String) comboBox.getSelectedItem();
-					
-					// Convertir fecha a String
-					SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-					String fechaString = formatDate.format(fecha);
-					
-					
-					// Declaracion SQL
-					String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
-							+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fechaString + "', '" + tipo + "');";
-					conexion.ejecutarInsertDeleteUpdate(insertar);
-				} catch (SQLException e1) {
-					e1.printStackTrace();					
+				
+				// Se inicializan los datos recogidos en el textfield
+				String nombre = cuadroNombre.getText();
+				String localizacion = cuadroLocalizacion.getText();
+				Date fecha = dateChooser.getDate();
+				String tipo = (String) comboBox.getSelectedItem();
+				
+				// Comprobar que todos los campos estan llenos
+				if (nombre.isEmpty() || localizacion.isEmpty()|| fecha == null) {
+					JOptionPane.showMessageDialog(null, "Debes rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
-				// Cerramos la conexion
-				finally {
+				
+				// Convertir fecha a String
+				SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+				String fechaString = formatDate.format(fecha);
+
+					ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 					try {
-						conexion.desconectar();
-						System.out.println("off");
+						conexion.conectar();
+						System.out.println("on"); // Comprobaciones que la base de datos funciona
+	
+						// Declaracion SQL
+						String insertar = "INSERT INTO Eventos (nombre, localizacion, fecha, tipo) "
+								+ "VALUES ('" + nombre + "', '" + localizacion + "', '" + fechaString + "', '" + tipo + "');";
+						conexion.ejecutarInsertDeleteUpdate(insertar);
 					} catch (SQLException e1) {
-						e1.printStackTrace();
+						e1.printStackTrace();					
 					}
-				}
-				
-				dispose(); // Cerrar la ventana al pulsar el botón
-				
-				// Mostrar un mensaje 
-				String mensaje = "Evento creado";
-				JOptionPane.showMessageDialog(null, mensaje);
-		    }
+					// Cerramos la conexion
+					finally {
+						try {
+							conexion.desconectar();
+							System.out.println("off");
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+					
+					dispose(); // Cerrar la ventana al pulsar el botón
+					
+					// Mostrar un mensaje 
+					JOptionPane.showMessageDialog(null, "Evento creado");
+			    }
 		});
 		botonGuardar.setBackground(new Color(255, 255, 81));
 		botonGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 30));

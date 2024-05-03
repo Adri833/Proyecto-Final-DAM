@@ -13,10 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import BBDD.ConexionMySQL;
+import javax.swing.SpinnerNumberModel;
 
 public class Inscripciones extends JFrame {
 
@@ -26,7 +28,6 @@ public class Inscripciones extends JFrame {
 	private JTextField cuadroDni;
 	private JLabel labelEdad;
 	private JTextField cuadroPokemon;
-	private JTextField cuadroEdad;
 	private JLabel labelPokemon;
 
 
@@ -95,13 +96,13 @@ public class Inscripciones extends JFrame {
 		labelEdad.setBounds(56, 310, 102, 43);
 		contentPane.add(labelEdad);
 		
-		cuadroEdad = new JTextField();
-		cuadroEdad.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
-		cuadroEdad.setForeground(Color.WHITE);
-		cuadroEdad.setColumns(10);
-		cuadroEdad.setBackground(Color.GRAY);
-		cuadroEdad.setBounds(158, 310, 340, 43);
-		contentPane.add(cuadroEdad);
+		JSpinner spinnerEdad = new JSpinner();
+		spinnerEdad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		spinnerEdad.setForeground(Color.GRAY);
+		spinnerEdad.setBackground(Color.GRAY);
+        spinnerEdad.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 25));
+        spinnerEdad.setBounds(158, 310, 88, 43);
+        contentPane.add(spinnerEdad);
 		
 		labelPokemon = new JLabel("Pokemon:");
 		labelPokemon.setForeground(Color.BLACK);
@@ -131,13 +132,18 @@ public class Inscripciones extends JFrame {
 				// Se inicializan los datos recogidos en el textfield
 				String nombre = cuadroNombre.getText();
 				String dni= cuadroDni.getText();
-				String edadString = cuadroEdad.getText();
+				int edad = (int) spinnerEdad.getValue();
 				String pokemon = cuadroPokemon.getText();
-
-				// Convertir edad de String a Int
-				int edad = Integer.parseInt(edadString);
 				
-				// Comprobar que el participante sea mayor de edad y el dni sea correcto
+				// Verificar que los campos estén llenos
+				
+				if (nombre.isEmpty() || dni.isEmpty() || pokemon.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Debes rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				
+				// Comprobar que el participante sea mayor de edad
 				if (edad < 18) {
 					String mensaje18 = "El participante debe ser mayor de edad";
 					JOptionPane.showMessageDialog(null, mensaje18, "" ,JOptionPane.WARNING_MESSAGE);

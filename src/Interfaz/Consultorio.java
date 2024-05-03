@@ -15,6 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import BBDD.ConexionMySQL;
 
 import javax.swing.JTable;
+import java.awt.Color;
+import javax.swing.border.MatteBorder;
+import java.awt.Font;
 
 public class Consultorio extends JFrame {
 
@@ -62,6 +65,7 @@ public class Consultorio extends JFrame {
 
 	}
 
+	@SuppressWarnings("serial")
 	private void Nombre_ParticipantesBBDD() {
 	    ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 	    try {
@@ -87,7 +91,18 @@ public class Consultorio extends JFrame {
 	    		
 	    		
 	    		// Crea la tabla y la configura
-	    		table = new JTable(model);
+	    		table = new JTable(model) {
+	    		    // Sobreescribir el método isCellEditable para que todas las celdas sean no editables
+	    		    @Override
+	    		    public boolean isCellEditable(int row, int column) {
+	    		        return false;
+	    		    }
+	    		};
+	    		table.setFont(new Font("Lucida Sans Typewriter", Font.PLAIN, 15));
+	    		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(226, 227, 169)));
+	    		table.setCellSelectionEnabled(true);
+	    		table.setForeground(new Color(75, 155, 227));
+	    		table.setBackground(Color.WHITE);
 	    		JScrollPane scrollPane = new JScrollPane(table);
 	    		scrollPane.setBounds(59, 61, 558, 577);
 	    		contentPane.add(scrollPane);

@@ -78,6 +78,12 @@ public class BorrarEvento extends JFrame {
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				// Verificar si el JComboBox tiene elementos
+		        if (eventosComboBox.getItemCount() == 0) {
+		            JOptionPane.showMessageDialog(null, "No hay eventos disponibles para borrar", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+		        
 			    // Obtener el evento seleccionado del comboBox
 		        String eventoSeleccionado = (String) eventosComboBox.getSelectedItem();
 		        
@@ -168,7 +174,7 @@ public class BorrarEvento extends JFrame {
 		        JOptionPane.showMessageDialog(null, "Evento borrado");
 		    } catch (SQLException e) {
 		        e.printStackTrace();
-		        JOptionPane.showMessageDialog(null, "Error al borrar el evento");
+		        JOptionPane.showInputDialog(null, "Error al borrar el evento", JOptionPane.ERROR_MESSAGE);
 		    } finally {
 		        try {
 		            conexion.desconectar();

@@ -229,7 +229,7 @@ public class SeleccionarEvento2 extends JFrame {
 	        
 	        // Si la cantidad es mayor que 0, significa que el participante ya está inscrito
 	        if (cantidad > 0) {
-	            JOptionPane.showMessageDialog(null, "El participante ya está inscrito en este evento.");
+				JOptionPane.showMessageDialog(null, "El participante ya está inscrito en este evento", "Error", JOptionPane.ERROR_MESSAGE);
 	        } else {
 	            // Si no, inserta el nuevo registro en la tabla Participantes_Eventos
 	            String consulta = "INSERT INTO Participantes_Eventos (id_eventos, id_participantes) VALUES (?, ?)";
@@ -241,7 +241,7 @@ public class SeleccionarEvento2 extends JFrame {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "Error al inscribir al participante al evento.");
+            JOptionPane.showMessageDialog(null, "Error al inscribir al participante", "Error", JOptionPane.ERROR_MESSAGE);
 	    } finally {
 	        try {
 	            conexion.desconectar();

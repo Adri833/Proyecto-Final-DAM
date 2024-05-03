@@ -76,6 +76,13 @@ public class SeleccionarEvento extends JFrame {
 			botonInscribir.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
+					// Verificar si el JComboBox tiene elementos
+			        if (eventosComboBox.getItemCount() == 0) {
+			            JOptionPane.showMessageDialog(null, "No hay torneos creados", "Error", JOptionPane.ERROR_MESSAGE);
+			            dispose();
+			            return;
+			        }
+					
 				    // Obtener el evento seleccionado del comboBox
 			        String eventoSeleccionado = (String) eventosComboBox.getSelectedItem();
 			        
@@ -187,7 +194,7 @@ public class SeleccionarEvento extends JFrame {
 	        JOptionPane.showMessageDialog(null, "Participante inscrito correctamente al evento.");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "Error al inscribir al participante al evento.");
+            JOptionPane.showMessageDialog(null, "Error al inscribir al participante", "Error", JOptionPane.ERROR_MESSAGE);
 	    } finally {
 	        try {
 	            conexion.desconectar();

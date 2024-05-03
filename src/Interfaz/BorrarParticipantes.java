@@ -78,7 +78,13 @@ public class BorrarParticipantes extends JFrame {
 				
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						
+					
+				// Verificar si el JComboBox tiene elementos
+		        if (eventosComboBox.getItemCount() == 0) {
+		            JOptionPane.showMessageDialog(null, "No hay participantes disponibles para borrar", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+				
 			 // Obtener el participante seleccionado del comboBox
 				String participanteSeleccionado = (String) eventosComboBox.getSelectedItem();
 				        
@@ -154,6 +160,12 @@ public class BorrarParticipantes extends JFrame {
 			  ConexionMySQL conexion = new ConexionMySQL("root", "test", "dbname");
 			  try {
 			      conexion.conectar();
+			      
+			   // Eliminar los registros asociados al evento en la tabla Participantes_Eventos
+			      String consultaEliminarParticipantes = "DELETE FROM Participantes_Eventos WHERE id_participantes = ?";
+			      PreparedStatement statementEliminarParticipantes = conexion.prepareStatement(consultaEliminarParticipantes);
+			      statementEliminarParticipantes.setInt(1, idParticipantes);
+			      statementEliminarParticipantes.executeUpdate();
 			        
 			      String consultaEliminarEvento = "DELETE FROM Participantes WHERE idParticipantes = ?";
 			      PreparedStatement statementEliminarEvento = conexion.prepareStatement(consultaEliminarEvento);
